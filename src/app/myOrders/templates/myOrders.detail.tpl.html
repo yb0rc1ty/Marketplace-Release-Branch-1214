@@ -1,0 +1,112 @@
+<article>
+    <h3 class="page-header">
+        <div class="pull-right">
+            <button ng-if="myOrderDetail.canCancel" ng-click="myOrderDetail.cancelOrder(myOrderDetail.order.ID)" class="btn btn-default"><span class="text-danger">Cancel Order</span>
+            </button>
+            <button ui-sref="myOrders" class="btn btn-default">My Orders</button>
+        </div>
+        <b> Order Number: {{myOrderDetail.order.ID}}</b>
+    </h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="text-primary">Order Summary</h5>
+        </div>
+        <div class="panel-body">
+            <div class="well">
+                <div class="row">
+                    <div class="col-sm-3">Subtotal:</div>
+                    <div class="col-sm-3">{{myOrderDetail.order.Subtotal | currency}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">Taxes:</div>
+                    <div class="col-sm-3">{{myOrderDetail.order.TaxCost | currency}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">Shipping:</div>
+                    <div class="col-sm-3">{{myOrderDetail.order.ShippingCost | currency}}</div>
+                </div>
+                <div ng-if="myOrderDetail.promotionList.length" ng-repeat="promotion in myOrderDetail.promotionList" class="text-danger">
+                    <div class="row">
+                        <div class="col-sm-3">{{promotion.Code}}</div>
+                        <div class="col-sm-3">{{-1 * promotion.Amount | currency}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h4>Total:</h4++++>
+                    </div>
+                    <div class="col-sm-3">
+                        <h4>{{myOrderDetail.order.Total | currency}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="text-primary">Payment Info</h5>
+        </div>
+        <div class="panel-body">
+            <div ng-repeat="pay in myOrderDetail.paymentList | orderBy:'Type' ">
+                <div class="payment-item well">
+                    <strong>Payment Type:</strong> {{pay.Type}}<br>
+                    <strong>Amount:</strong> {{pay.Amount | currency}}<br>
+                    <div ng-if="pay.Type ==='CreditCard'">
+                        <strong>Cardholder Name:</strong> {{pay.creditCards.CardholderName}}<br>
+                        <strong> <i class="fa fa-cc-visa"></i> Ending in:</strong> {{pay.creditCards.PartialAccountNumber}}
+                    </div>
+                </div>
+            </div>
+            <div class="well well-lg text-center" ng-if="!myOrderDetail.list.Items.length">
+                <b>This order does not have any payments associated with it</b>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="text-primary">Shipping Address</h5>
+                </div>
+                <div class="panel-body">
+                    <p ng-bind-html="myOrderDetail.list.Items[0].ShippingAddress | address:'full'"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading text-primary">
+                    <h5 class="text-primary">Billing Address</h5>
+                </div>
+                <div class="panel-body">
+                    <p ng-bind-html="myOrderDetail.order.BillingAddress | address:'full'"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="text-primary">Line Item Summary</h5>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="li in myOrderDetail.list.Items track by $index">
+                        <td>{{li.ProductID}}</td>
+                        <td>{{li.UnitPrice | currency}}</td>
+                        <td>{{li.Quantity}}</td>
+                        <td>{{li.LineTotal | currency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</article>

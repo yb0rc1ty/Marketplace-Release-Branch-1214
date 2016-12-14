@@ -1,0 +1,103 @@
+<article id="myPayments" cg-busy="myPayments.loading">
+    <div>
+        <div class="page-header">
+            <h2>My Available Payments</h2>
+        </div>
+    </div>
+
+    <div ng-if="myPayments.personalCreditCards" >
+        <div class="page-header" >
+            <button class="btn btn-success pull-right" ng-click="myPayments.createCreditCard()"><i
+                    class="fa fa-plus-circle"></i> Create New Credit Card
+            </button>
+            <h3>Credit Cards</h3>
+        </div>
+        <div class="row" ng-if="myPayments.personalCreditCards">
+            <div class="col-sm-6" ng-repeat="creditCard in myPayments.personalCreditCards.Items">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="pull-right">
+                            <a href="" ng-click="myPayments.delete(creditCard)">Delete</a> |
+                            <a href="" ng-click="myPayments.edit(creditCard)">Edit</a>
+                        </div>
+                        <div>
+                            <b>{{creditCard.CardholderName}}</b>
+                            <br>
+                            {{creditCard.CardType}}
+                            XXXX-XXXX-XXXX-{{creditCard.PartialAccountNumber}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="no-matches" ng-if="!myPayments.personalCreditCards">
+        You have you no credit cards listed
+    </div>
+
+
+
+
+    <div ng-if="myPayments.personalSpendingAccounts">
+        <div class="page-header" >
+            <h3>Spending Accounts</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 " ng-repeat="spendingAccount in myPayments.personalSpendingAccounts.Items">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <b>{{spendingAccount.Name}}</b>
+                        <br>
+                        <div>
+                            Balance:
+                            <span class="pull-right" ng-if="spendingAccount.Balance">{{spendingAccount.Balance | currency}}</span>
+                        </div>
+                        <div>
+                            Start Date:
+                            <span class="pull-right" ng-if="spendingAccount.StartDate">{{spendingAccount.StartDate | date:'shortDate'}}<br></span>
+                        </div>
+                        <div>
+                            End Date:
+                            <span class="pull-right" ng-if="spendingAccount.EndDate">{{spendingAccount.EndDate | date :'shortDate'}}<br></span>
+
+                        </div>
+                        <div>
+                            Redemption Code:
+                            <span class="pull-right" ng-if="spendingAccount.RedemptionCode">{{spendingAccount.RedemptionCode}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-if="myPayments.giftCards">
+        <div class="page-header">
+            <h3>Gift Cards</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 " ng-repeat="giftCard in myPayments.giftCards.Items">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <b>{{giftCard.Name}}</b>
+                        <br>
+                        <div>
+                            Balance:
+                            <span class="pull-right" ng-if="giftCard.Balance">{{giftCard.Balance | currency}}</span>
+                        </div>
+                        <div ng-if="giftCard.StartDate && giftCard.EndDate">
+                            Valid From:
+                            <span class="pull-right">{{giftCard.StartDate | date:'shortDate'}} to {{giftCard.EndDate | date : 'MM/dd/yyyy'}}</span>
+                        </div>
+                        <div>
+                            Redemption Code:
+                            <span class="pull-right" ng-if="giftCard.RedemptionCode">{{giftCard.RedemptionCode}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</article>

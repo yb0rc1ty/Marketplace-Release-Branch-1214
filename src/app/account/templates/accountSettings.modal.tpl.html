@@ -1,0 +1,35 @@
+<div class="modal-body">
+    <form name="EditAccountInfoForm" ng-submit="accountEditModal.update()">
+        <div class="form-group">
+            <label><h3>Edit Account Information</h3></label>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>First Name</label>
+                    <input type="text" ng-model="accountEditModal.profile.FirstName" class="form-control" required/>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Last Name</label>
+                    <input type="text" ng-model="accountEditModal.profile.LastName" class="form-control" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>User ID</label>
+                <input type="text" ng-model="accountEditModal.profile.ID" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" ng-model="accountEditModal.profile.Username" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" ng-model="accountEditModal.profile.Email" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" ng-model="accountEditModal.profile.Phone" class="form-control"/>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-default" type="button" ng-click="accountEditModal.cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

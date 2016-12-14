@@ -1,0 +1,19 @@
+<div class="row">
+	<aside class="col-md-3">
+		<ul class="nav nav-pills nav-stacked">
+			<li ui-sref-active="active">
+				<a href="" ui-sref=".information"><i class="fa fa-user"></i> Account Information</a>
+			</li>
+			<li ui-sref-active="active">
+				<a href="" ui-sref="myAddresses"><i class="fa fa-map-marker"></i> My Addresses</a>
+			</li>
+			<li  ui-sref-active="active">
+				<a href="" ui-sref="myPayments"><i class="fa fa-credit-card"></i> Payment Methods</a>
+			</li>
+			<li>
+				<a ui-sref="myOrders"><i class="fa fa-clock-o"></i> My Orders</a>
+			</li>
+		</ul>
+	</aside>
+	<article class="col-md-9" ui-view></article>
+</div>

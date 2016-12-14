@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b class="panel-title">Categories</b>
+        <i class="fa fa-times pull-right" aria-hidden="true"  ng-click="mobileCategoryModal.cancel()"></i>
+    </div>
+    <treecontrol class="oc-tree"
+                 tree-model="mobileCategoryModal.treeConfig.treeData"
+                 options="mobileCategoryModal.treeConfig.treeOptions"
+                 selected-node="mobileCategoryModal.treeConfig.selectedNode"
+                 expanded-nodes="mobileCategoryModal.treeConfig.expandedNodes"
+                 on-selection="mobileCategoryModal.selectNode(node)">
+        {{node.Name}}
+    </treecontrol>
+</div>

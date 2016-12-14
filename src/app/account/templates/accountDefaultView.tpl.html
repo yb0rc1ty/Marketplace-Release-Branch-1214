@@ -1,0 +1,49 @@
+<article>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h2>Account Information</h2>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><i class="fa fa-user"></i>&nbsp;{{accountInfo.profile.FirstName}} {{accountInfo.profile.LastName}}</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <b>First Name</b>
+                        <p>{{accountInfo.profile.FirstName}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <b>Last Name</b>
+                        <p>{{accountInfo.profile.LastName}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <b>Username</b>
+                        <p>{{accountInfo.profile.Username}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <b>User ID</b>
+                        <p>{{accountInfo.profile.ID}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <b>Email</b>
+                        <p>{{accountInfo.profile.Email}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <b>Phone</b>
+                        <p>{{accountInfo.profile.Phone}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="account-buttons">
+            <button type="button" class="btn btn-default" ng-click="accountInfo.editInfo()"><i class="fa fa-cog"></i>&nbsp;Edit Info</button>
+            <button type="button" class="btn btn-default" ng-click="accountInfo.changePassword(accountInfo.currentUser)">Change Password</button>
+        </div>
+    </div>
+</article>
+

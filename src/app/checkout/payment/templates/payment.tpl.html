@@ -1,0 +1,64 @@
+<div class="row form-group" ng-init="payment = this">
+    <div ng-class="{'col-sm-8': checkout.checkoutConfig.MultiplePayments, 'col-sm-12': !checkout.checkoutConfig.MultiplePayments}">
+        <label for="payment_method">Payment Method <span ng-show="checkoutPayment.currentOrderPayments.length > 1">{{payment.$index + 1}}</span> <i class="fa fa-times-circle text-danger" ng-if="payment.$index > 0" ng-click="checkoutPayment.removePayment(checkout.currentOrder, payment.$index)"></i></label>
+        <select id="payment_method" required="true" ng-change="checkoutPayment.setPaymentMethod(checkout.currentOrder, payment.$index)" class="form-control" ng-model="checkoutPayment.currentOrderPayments[payment.$index].Type" ng-options="paymentMethod.Value as paymentMethod.Display for paymentMethod in checkoutPayment.paymentMethods"></select>
+    </div>
+    <div class="col-sm-4" ng-if="checkout.checkoutConfig.MultiplePayments">
+        <label>Amount</label>
+        <input type="number" class="form-control" ng-model="checkoutPayment.currentOrderPayments[payment.$index].Amount" max="{{checkoutPayment.currentOrderPayments[payment.$index].MaxAmount}}" ng-change="checkoutPayment.patchPaymentAmount(checkout.currentOrder, payment.$index)" />
+    </div>
+</div>
+<div class="row" ng-switch="checkoutPayment.currentOrderPayments[payment.$index].Type">
+    <div class="col-sm-12">
+        <div ng-switch-when="PurchaseOrder">
+            <label for="poNumber">PO Number</label>
+            <input id="poNumber" class="form-control" type="text" ng-model="checkoutPayment.currentOrderPayments[payment.$index].xp.PONumber" ng-model-options="{debounce: 750}" ng-change="checkoutPayment.savePONumber(payment.$index, checkout.currentOrder)"/>
+        </div>
+        <div ng-switch-when="CreditCard">
+            <label>Credit Card {{checkoutPayment.creditCardDisplayLimit}}</label>
+            <a href="" class="pull-right" ng-click="checkoutPayment.createCreditCard(checkout.currentOrder, payment.$index)"><i class="fa fa-plus-circle"></i> Create Credit Card</a>
+            <div class="panel panel-default" ng-repeat="creditCard in checkoutPayment.creditCards" ng-if="!checkoutPayment.currentOrderPayments[payment.$index].CreditCardID || checkoutPayment.currentOrderPayments[payment.$index].CreditCardID == creditCard.ID">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <i class="fa fa-2x {{checkout.getCardTypeClass(creditCard)}}"></i>
+                        </div>
+                        <div class="col-sm-4">
+                            <b>{{creditCard.CardholderName}}</b>
+                        </div>
+                        <div class="col-sm-4">
+                            <span>{{'XXXX-XXXX-XXXX-' + creditCard.PartialAccountNumber}}</span>
+                        </div>
+                        <div class="col-sm-1">
+                            <span>{{creditCard.ExpirationDate | date:'MM/yy'}}</span>
+                        </div>
+                        <div class="col-sm-2 text-right">
+                            <a href="" ng-click="checkoutPayment.currentOrderPayments[payment.$index].CreditCardID = null" ng-if="checkoutPayment.currentOrderPayments[payment.$index].CreditCardID">Change</a>
+                            <a href="" ng-click="checkoutPayment.setCreditCard(checkout.currentOrder, payment.$index, creditCard)" ng-if="!checkoutPayment.currentOrderPayments[payment.$index].CreditCardID">Select</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-switch-when="SpendingAccount">
+            <label>Spending Account</label>
+            <div class="panel panel-default" ng-repeat="spendingAccount in checkoutPayment.spendingAccounts" ng-if="!checkoutPayment.currentOrderPayments[payment.$index].SpendingAccountID || checkoutPayment.currentOrderPayments[payment.$index].SpendingAccountID == spendingAccount.ID">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <b>{{spendingAccount.Name}}</b>
+                        </div>
+                        <div class="col-sm-4">
+                            <b>Balance: <span class="text-success">{{spendingAccount.Balance | currency}}</span></b>
+                        </div>
+                        <div class="col-sm-2 text-right">
+                            <a href="" ng-click="checkoutPayment.currentOrderPayments[payment.$index].SpendingAccountID = null" ng-if="checkoutPayment.currentOrderPayments[payment.$index].SpendingAccountID">Change</a>
+                            <a href="" ng-click="checkoutPayment.setSpendingAccount(checkout.currentOrder, payment.$index, spendingAccount)" ng-if="!checkoutPayment.currentOrderPayments[payment.$index].SpendingAccountID">Select</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr ng-if="!payment.$last"/>
+    </div>
+</div>
